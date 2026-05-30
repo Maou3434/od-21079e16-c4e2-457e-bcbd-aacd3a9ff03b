@@ -1,0 +1,272 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Color Shift · Neutral Modern</title>
+  <style>
+    /* ─── tokens ───────────────────────────────────────────────────────── */
+    :root {
+      /* Neutral Modern */
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --surface-warm: var(--surface);
+      --fg: #111111;
+      --fg-2: var(--fg);
+      --muted: #6b6b6b;
+      --meta: var(--muted);
+      --border: #e5e5e5;
+      --border-soft: var(--border);
+      --accent: #2f6feb;
+      --accent-on: #ffffff;
+      --accent-hover: color-mix(in oklab, var(--accent), black 8%);
+      --accent-active: color-mix(in oklab, var(--accent), black 14%);
+      --success: #17a34a;
+      --warn: #eab308;
+      --danger: #dc2626;
+
+      --font-display: "Inter", -apple-system, system-ui, sans-serif;
+      --font-body: "Inter", -apple-system, system-ui, sans-serif;
+      --font-mono: ui-monospace, "JetBrains Mono", monospace;
+
+      --text-xs: 12px;
+      --text-sm: 14px;
+      --text-base: 16px;
+      --text-lg: 20px;
+      --text-xl: 24px;
+      --text-2xl: 32px;
+      --text-3xl: 48px;
+      --text-4xl: 64px;
+
+      --leading-body: 1.5;
+      --leading-tight: 1.2;
+      --tracking-display: -0.01em;
+
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-12: 48px;
+      --space-20: 80px;
+
+      --section-y-desktop: 80px;
+      --section-y-tablet: 48px;
+      --section-y-phone: 32px;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-pill: 9999px;
+
+      --elev-flat: none;
+      --elev-ring: 0 0 0 1px var(--border);
+      --elev-raised: 0 2px 8px color-mix(in oklab, var(--fg), transparent 92%);
+
+      --focus-ring: 0 0 0 3px color-mix(in oklab, var(--accent), transparent 70%);
+
+      --motion-fast: 150ms;
+      --motion-base: 200ms;
+      --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+      --container-max: 1200px;
+      --container-gutter-desktop: 24px;
+      --container-gutter-tablet: 16px;
+      --container-gutter-phone: 12px;
+
+      /* derived — do not change */
+      --accent-soft: color-mix(in oklch, var(--accent) 14%, transparent);
+      --fg-soft:     color-mix(in oklch, var(--fg) 6%, transparent);
+      --fs-h1: clamp(44px, 6vw, 76px);
+      --fs-h2: clamp(32px, 4vw, 48px);
+      --fs-h3: 22px;
+      --fs-lead: 19px;
+      --fs-body: 16px;
+      --fs-meta: 13px;
+      --gap-xs: 8px;
+      --gap-sm: 12px;
+      --gap-md: 20px;
+      --gap-lg: 32px;
+      --gap-xl: 56px;
+      --gap-2xl: 96px;
+      --container: 1120px;
+      --gutter: 32px;
+    }
+
+    /* ─── reset & base ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: var(--fs-body);
+      line-height: var(--leading-body);
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      transition: background var(--motion-base) var(--ease-standard);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+    p { text-wrap: pretty; }
+    h1, h2, h3, h4 { text-wrap: balance; }
+
+    /* ─── layout primitives ─────────────────────────────────────────── */
+    .container {
+      max-width: var(--container);
+      margin-inline: auto;
+      padding-inline: var(--gutter);
+    }
+    .section {
+      padding-block: var(--section-y-desktop);
+    }
+    @media (max-width: 1024px) {
+      .section { padding-block: var(--section-y-tablet); }
+    }
+    @media (max-width: 640px) {
+      .section { padding-block: var(--section-y-phone); }
+    }
+    .section + .section { border-top: 1px solid var(--border); }
+    .stack { display: flex; flex-direction: column; }
+    .stack > * + * { margin-top: var(--gap-md); }
+    .row { display: flex; align-items: center; gap: var(--gap-md); }
+    .row-between { display: flex; align-items: center; justify-content: space-between; gap: var(--gap-md); }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap-lg); }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap-lg); }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap-md); }
+    .grid-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: var(--gap-xl); align-items: start; }
+    .grid-1-2 { display: grid; grid-template-columns: 1fr 2fr; gap: var(--gap-xl); align-items: start; }
+    @media (max-width: 920px) {
+      .grid-2, .grid-3, .grid-4, .grid-2-1, .grid-1-2 { grid-template-columns: 1fr; }
+    }
+
+    /* ─── type ──────────────────────────────────────────────────────── */
+    .h1, h1 { font-family: var(--font-display); font-size: var(--text-4xl); font-weight: 600; line-height: var(--leading-tight); letter-spacing: var(--tracking-display); margin: 0; }
+    .h2, h2 { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 600; line-height: var(--leading-tight); letter-spacing: var(--tracking-display); margin: 0; }
+    .h3, h3 { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 600; line-height: var(--leading-tight); letter-spacing: var(--tracking-display); margin: 0; }
+    .lead   { font-size: var(--text-lg); line-height: var(--leading-body); color: var(--muted); max-width: 60ch; margin: 0; }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 var(--gap-md);
+    }
+    .meta { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--muted); }
+    .num  { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+    /* ─── chrome: nav + footer ──────────────────────────────────────── */
+    .topnav {
+      position: sticky; top: 0; z-index: 10;
+      background: color-mix(in oklch, var(--bg) 92%, transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--motion-base) var(--ease-standard);
+    }
+    .topnav-inner { display: flex; align-items: center; justify-content: space-between; padding-block: 14px; }
+    .topnav .logo { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 600; letter-spacing: var(--tracking-display); }
+    .pagefoot { padding-block: var(--gap-xl); color: var(--muted); font-size: var(--text-sm); border-top: 1px solid var(--border); margin-top: auto; }
+    .pagefoot .row-between { flex-wrap: wrap; gap: var(--gap-md); }
+
+    /* ─── buttons ───────────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      transition: background var(--motion-fast) var(--ease-standard), border-color var(--motion-fast) var(--ease-standard);
+    }
+    .btn:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
+    }
+    .btn-primary { background: var(--accent); color: var(--accent-on); border-color: var(--accent); }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-primary:active { background: var(--accent-active); }
+    .btn-secondary { background: transparent; color: var(--fg); border-color: var(--border); }
+    .btn-secondary:hover { border-color: var(--fg); }
+    .btn-ghost { background: transparent; color: var(--fg); border-color: transparent; padding-inline: var(--space-2); }
+    .btn-ghost:hover { color: var(--accent); background: var(--accent-soft); }
+    .btn-arrow::after { content: '→'; transition: transform var(--motion-fast) var(--ease-standard); }
+    .btn-arrow:hover::after { transform: translateX(2px); }
+
+    /* ─── card / surface ────────────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-5);
+    }
+
+    /* ─── hero variants ─────────────────────────────────────────────── */
+    .hero          { padding-block: clamp(80px, 12vw, 160px); flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .hero-center   { text-align: center; max-width: 40ch; margin-inline: auto; }
+    .hero h1       { margin-bottom: var(--space-4); }
+    .hero .lead    { margin-bottom: var(--space-6); margin-inline: auto; }
+    .hero-cta      { display: inline-flex; gap: var(--space-3); flex-wrap: wrap; }
+    .hero-center .hero-cta { justify-content: center; }
+  </style>
+</head>
+<body>
+  <header class="topnav" data-od-id="topnav">
+    <div class="container topnav-inner">
+      <span class="logo">Color Shift</span>
+    </div>
+  </header>
+
+  <main id="content" style="flex: 1; display: flex; flex-direction: column;">
+    <section class="section hero" data-od-id="hero">
+      <div class="container hero-center card" style="box-shadow: var(--elev-raised); padding: var(--space-8);">
+        <p class="eyebrow" id="colorCode" aria-live="polite">DEFAULT</p>
+        <h1>Change the mood.</h1>
+        <p class="lead">Click the button below to randomly generate a new background color that fits the active Neutral Modern contrast ratio.</p>
+        <div class="hero-cta">
+          <button class="btn btn-primary" id="btnChange">Change Color</button>
+          <button class="btn btn-ghost" id="btnReset">Reset</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pagefoot" data-od-id="footer">
+    <div class="container row-between">
+      <span>© 2026 Color Shift App</span>
+      <span class="meta">A single-screen prototype</span>
+    </div>
+  </footer>
+
+  <script>
+    const btnChange = document.getElementById('btnChange');
+    const btnReset = document.getElementById('btnReset');
+    const colorCode = document.getElementById('colorCode');
+    const root = document.documentElement;
+
+    btnChange.addEventListener('click', () => {
+      // Generate a soft background color
+      const hue = Math.floor(Math.random() * 360);
+      const chroma = 0.01 + Math.random() * 0.03; // Low chroma for neutrality
+      const lightness = 0.92 + Math.random() * 0.06; // Light enough to keep contrast
+      
+      const colorStr = `oklch(${lightness.toFixed(3)} ${chroma.toFixed(3)} ${hue})`;
+      root.style.setProperty('--bg', colorStr);
+      colorCode.textContent = colorStr.toUpperCase();
+    });
+
+    btnReset.addEventListener('click', () => {
+      root.style.removeProperty('--bg');
+      colorCode.textContent = 'DEFAULT';
+    });
+  </script>
+</body>
+</html>
